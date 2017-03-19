@@ -24,29 +24,55 @@ public class ChristmasTreeCreator {
     private DIRECTION direction;
 
     void create() {
-        StringBuffer tree = new StringBuffer("");
-        switch (direction) {
+        StringBuffer[] tree = new StringBuffer[height];
+        for (int i = 0; i < height; i++) {
+            tree[i] = new StringBuffer("");
+        }
+
+        for (int height = 1; height <= this.height; height++) {
+            tree[height - 1].append(createLevel(height));
+        }
+
+        StringBuffer treeDisplay = new StringBuffer();
+        switch (direction)
+
+        {
             case DOWN:
-                for (int height = 1; height <= this.height; height++) {
-                    tree.append(createLevel(height))
-                            .append("\n");
+                for (int i = 0; i < height; i++) {
+                    treeDisplay.append(tree[i]).append("\n");
                 }
                 break;
             case UP:
-                for (int height = this.height; height >= 1; height--) {
-                    tree.append(createLevel(height))
-                            .append("\n");
+                for (int i = this.height - 1; i >= 0; i--) {
+                    treeDisplay.append(tree[i]).append("\n");
                 }
+                break;
+            case LEFT:
+                for (int i = 0; i < 2*height-1; i++) {
+                    for (int level = height-1; level >= 0; level--) {
+                        treeDisplay.append(tree[level].charAt(i));
+                    }
+                    treeDisplay.append("\n");
+                }
+                break;
+            case RIGHT:
+                for (int i = 0; i < 2*height-1; i++) {
+                    for (int level = 0; level < height; level++) {
+                        treeDisplay.append(tree[level].charAt(i));
+                    }
+                    treeDisplay.append("\n");
+                }
+                break;
         }
-        //System.out.println(height + " " + direction.toString());
-        System.out.println(tree.toString());
+
+        System.out.println(treeDisplay.toString());
     }
 
     private String createLevel(int levelHeight) {
         StringBuffer level = new StringBuffer("");
         level.append(createLeftSpace(levelHeight))
                 .append(createCore(levelHeight))
-        //.append(createRightSpace())
+                .append(createRightSpace(height))
         ;
         return level.toString();
     }
@@ -65,5 +91,9 @@ public class ChristmasTreeCreator {
             stringBuffer.append(SPACE);
         }
         return stringBuffer.toString();
+    }
+
+    private String createRightSpace(int levelHeight) {
+        return createLeftSpace(levelHeight);
     }
 }
