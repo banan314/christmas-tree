@@ -1,5 +1,3 @@
-import sun.reflect.generics.tree.Tree;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -13,7 +11,7 @@ public class Main {
         }
 
         DIRECTION direction;
-       direction = TreeInterviewer.fetchDirection();
+        direction = TreeInterviewer.fetchDirection();
 
         ChristmasTreeCreator christmasTreeCreator = new ChristmasTreeCreator();
         christmasTreeCreator.setHeight(height);

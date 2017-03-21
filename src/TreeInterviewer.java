@@ -34,16 +34,24 @@ public class TreeInterviewer {
         int height;
         try {
             height = Integer.parseInt(arg);
-        } catch (NumberFormatException e) {
-            wrongTimes++;
-            height = retryFetchHeight(arg, wrongTimes);
         }
+        catch (NumberFormatException e) {
+            wrongTimes++;
+            height = retryFetchHeight(arg, wrongTimes, "To nie jest liczba!");
+        }
+		if(height > 100) {
+            wrongTimes++;
+			retryFetchHeight(arg, wrongTimes, "Zbyt dużo!");
+		} else if(height < 0) {
+            wrongTimes++;
+			retryFetchHeight(arg, wrongTimes, "Nieujemna");
+		}
         return height;
     }
 
-    private static int retryFetchHeight(String arg, int wrongTimes) throws Exception {
+    private static int retryFetchHeight(String arg, int wrongTimes, String reason) throws Exception {
         final int maxTimes = 3;
-        System.out.println("To nie jest liczba!");
+        System.out.println(reason);
         if(wrongTimes >= maxTimes) {
             throw new Exception("Too many wrong tries");
         }
